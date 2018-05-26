@@ -2,6 +2,8 @@
 
 namespace Corp\Providers;
 
+use Corp\Article;
+use Corp\Policies\ArticlePolicy;
 use Corp\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Corp\Model' => 'Corp\Policies\ModelPolicy',
+        //32 урок
+        Article::class => ArticlePolicy::class,
     ];
 
     /**
