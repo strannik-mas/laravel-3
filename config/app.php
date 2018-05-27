@@ -165,6 +165,8 @@ return [
 
         Lavary\Menu\ServiceProvider::class,
 
+        Intervention\Image\ImageServiceProvider::class
+
     ],
 
     /*
@@ -218,6 +220,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
 
         'Menu'      => Lavary\Menu\Facade::class,
+
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

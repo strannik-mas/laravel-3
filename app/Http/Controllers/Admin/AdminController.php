@@ -23,21 +23,21 @@ class AdminController extends Controller
     {
         //тут нет сессии и пользователя тоже,
 
-        /*$this->middleware(function ($request, $next) {
+        $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             if(!$this->user){
                 abort(403);
             }
             return $next($request);
-        });*/
+        });
     }
 
     public function renderOutput()
     {
-        $this->user = Auth::user();
+        /*$this->user = Auth::user();
         if(!$this->user){
             abort(403);
-        }
+        }*/
 
         $this->vars = array_add($this->vars, 'title', $this->title);
         $menu = $this->getMenu();
