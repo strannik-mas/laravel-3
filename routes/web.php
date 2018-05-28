@@ -20,16 +20,19 @@ Route::resource('/', 'IndexController', [
 Route::resource('portfolios', 'PortfolioController', [
     'parameters' => [
         'portfolios' => 'alias'
-    ],
+    ]
 ]);
 
 Route::resource('articles', 'ArticlesController', [
     'parameters' => [
         'articles' => 'alias'
     ],
+    'names' => [
+        'show' => 'show.article'
+    ]
 ]);
 
-Route::get('articles/cat/{cat_alias}', ['uses' => 'ArticlesController@index', 'as' => 'articlesCat'])->where('cat_alias', '[\w-]+');
+Route::get('articles/cat/{cat_alias?}', ['uses' => 'ArticlesController@index', 'as' => 'articlesCat'])->where('cat_alias', '[\w-]+');
 
 Route::resource('comment', 'CommentController', [
     'only' => ['store'],
