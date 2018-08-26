@@ -16,7 +16,7 @@ class ArticlesController extends SiteController
     {
         parent::__construct(new MenusRepository(new \Corp\Menu));
         $this->bar='right';
-        $this->template = env('THEME') . '.articles';
+        $this->template = config('settings.theme') . '.articles';
 
         $this->p_rep = $p_rep;
         $this->a_rep = $a_rep;
@@ -36,13 +36,13 @@ class ArticlesController extends SiteController
         /*11 урок*/
         $articles = $this->getArticles($cat_alias);
         /*конец 11 урок*/
-        $content = view(env('THEME').'.articles_content')->with('articles',$articles)->render();
+        $content = view(config('settings.theme').'.articles_content')->with('articles',$articles)->render();
         $this->vars = array_add($this->vars, 'content',$content);
 
         //14 урок
         $comments = $this->getComments(config('settings.recent_comments'));
         $portfolios = $this->getPortfolios(config('settings.recent_portfolios'));
-        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(['comments' => $comments, 'portfolios' => $portfolios]);
+        $this->contentRightBar = view(config('settings.theme').'.articlesBar')->with(['comments' => $comments, 'portfolios' => $portfolios]);
 
         return $this->renderOutput();
 
@@ -91,16 +91,17 @@ class ArticlesController extends SiteController
         }
 //        dd($article->comments->groupBy('parent_id'));
         //22 урок
-        $this->title = $article->title;
-        $this->keywords = $article->keywords;
-        $this->meta_desc = $article->meta_desc;
-
-        $content = view(env('THEME').'.article_content')->with('article', $article)->render();
+        if($article) {
+            $this->title = $article->title;
+            $this->keywords = $article->keywords;
+            $this->meta_desc = $article->meta_desc;
+        }
+        $content = view(config('settings.theme').'.article_content')->with('article', $article)->render();
         $this->vars = array_add($this->vars, 'content', $content);
 
         $comments = $this->getComments(config('settings.recent_comments'));
         $portfolios = $this->getPortfolios(config('settings.recent_portfolios'));
-        $this->contentRightBar = view(env('THEME').'.articlesBar')->with(['comments' => $comments, 'portfolios' => $portfolios]);
+        $this->contentRightBar = view(config('settings.theme').'.articlesBar')->with(['comments' => $comments, 'portfolios' => $portfolios]);
 
         return $this->renderOutput();
     }

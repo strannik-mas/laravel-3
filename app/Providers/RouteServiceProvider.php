@@ -3,7 +3,8 @@
 namespace Corp\Providers;
 
 use Corp\Article;
-use Illuminate\Routing\Router;
+use Corp\Menu;
+use Corp\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -37,6 +38,15 @@ class RouteServiceProvider extends ServiceProvider
             return Article::where('alias', $value)->first();
         });
 
+        //43 урок
+        Route::bind('menus', function($value){
+            return Menu::where('id', $value)->first();
+        });
+
+        //45 урок
+        Route::bind('users', function($value){
+            return User::find($value);
+        });
     }
 
     /**

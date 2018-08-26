@@ -13,7 +13,7 @@ class ContactsController extends SiteController
     {
         parent::__construct(new MenusRepository(new \Corp\Menu));
         $this->bar='left';
-        $this->template = env('THEME') . '.contacts';
+        $this->template = config('settings.theme') . '.contacts';
     }
 
     public function index(Request $request)
@@ -32,7 +32,7 @@ class ContactsController extends SiteController
             ], $messages);
 
             $data = $request->all();
-            Mail::send(env('THEME').'.email', ['data' => $data], function ($message) use ($data) {
+            Mail::send(config('settings.theme').'.email', ['data' => $data], function ($message) use ($data) {
                 $mail_admin = env('MAIL_ADMIN');
                 $message->from($data['email'], $data['name']);
                 $message->to($mail_admin, '')->subject('question');
@@ -41,10 +41,10 @@ class ContactsController extends SiteController
         }
 
         $this->title = 'Контакты';
-        $content  = view(env('THEME').'.contact_content')->render();
+        $content  = view(config('settings.theme').'.contact_content')->render();
         $this->vars = array_add($this->vars, 'content',$content);
 
-        $this->contentLeftBar = view(env('THEME').'.contact_bar')->render();
+        $this->contentLeftBar = view(config('settings.theme').'.contact_bar')->render();
 
         return $this->renderOutput();
     }

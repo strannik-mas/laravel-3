@@ -28,7 +28,8 @@ Route::resource('articles', 'ArticlesController', [
         'articles' => 'alias'
     ],
     'names' => [
-        'show' => 'show.article'
+        'show' => 'show.article',
+        'index' => 'index.articles'
     ]
 ]);
 
@@ -49,7 +50,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function (){
     //admin
     Route::get('/', ['uses' => 'Admin\IndexController@index', 'as' => 'adminIndex']);
     Route::resource('/articles', 'Admin\ArticlesController');
-});
-/*Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');*/
+    Route::resource('/permissions', 'Admin\PermissionsController');
+    Route::resource('/users', 'Admin\UsersController');
+
+    Route::resource('/menus', 'Admin\MenusController');
+});

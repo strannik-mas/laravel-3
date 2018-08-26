@@ -40,6 +40,6 @@ class LoginController extends Controller
     //27 урок
     public function showLoginForm()
     {
-        return view(env('THEME').'.login')->with('title', 'Вход на сайт');
+        return view(config('settings.theme').'.login')->with('title', 'Вход на сайт');
     }
 }

@@ -6,7 +6,7 @@
             @set($i,1)
             @foreach ($sliders as $slider)
                 <li>
-                    <div class="slide-holder" style="background:  url('{{ asset(env('THEME')) }}/images/{{ $slider->img }}') no-repeat center center"
+                    <div class="slide-holder" style="background:  url('{{ asset(config('settings.theme')) }}/images/{{ $slider->img }}') no-repeat center center"
                          style="height:483px;">
                         <div class="slide-content-holder inner" style="height:483px;">
                             @if($i%2 !== 0)

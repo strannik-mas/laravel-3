@@ -29,7 +29,7 @@ class ArticlesController extends AdminController
 
         $this->a_rep = $a_rep;
 
-        $this->template = env('THEME').'.admin.articles';
+        $this->template = config('settings.theme').'.admin.articles';
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class ArticlesController extends AdminController
         $this->title = 'Менеджер статей';
 
         $articles = $this->getArticles();
-        $this->content = view(env('THEME').'.admin.articles_content')->with('articles', $articles)->render();
+        $this->content = view(config('settings.theme').'.admin.articles_content')->with('articles', $articles)->render();
 //dd($articles);
         return  $this->renderOutput();
     }
@@ -72,7 +72,7 @@ class ArticlesController extends AdminController
                 $lists[$categories->where('id', $category->parent_id)->first()->title][$category->id] = $category->title;
             }
         }
-        $this->content = view(env('THEME').'.admin.articles_create_content')->with('categories', $lists)->render();
+        $this->content = view(config('settings.theme').'.admin.articles_create_content')->with('categories', $lists)->render();
 
         return $this->renderOutput();
     }
@@ -134,7 +134,7 @@ class ArticlesController extends AdminController
 
         $this->title = 'Редактирование материала - ' . $article->title;
 
-        $this->content = view(env('THEME').'.admin.articles_create_content')->with(['categories'=> $lists, 'article' => $article])->render();
+        $this->content = view(config('settings.theme').'.admin.articles_create_content')->with(['categories'=> $lists, 'article' => $article])->render();
 
         return $this->renderOutput();
     }
@@ -163,9 +163,15 @@ class ArticlesController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        //37 урок
+        $result = $this->a_rep->deleteArticle($article);
+        if(is_array($result) && !empty($result['error'])){
+            return back()->with($result);
+        }
+
+        return redirect('/admin')->with($result);
     }
 
     public function getArticles()

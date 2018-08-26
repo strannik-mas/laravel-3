@@ -8,7 +8,7 @@
             <h1 class="post-title"><a href="#">{{ $article->title }}</a></h1>
             <!-- post featured -->
             <div class="image-wrap">
-                <img src="{{ asset(env('THEME')) }}/images/articles/{{ $article->img->max }}" alt="00212" title="00212" />
+                <img src="{{ asset(config('settings.theme')) }}/images/articles/{{ $article->img->max }}" alt="00212" title="00212" />
             </div>
             <p class="date">
                 <span class="month">{{ $article->created_at->format('M') }}</span>
@@ -53,7 +53,7 @@
                         @break;
                     @endif
 
-                    @include(env('THEME').'.comment', ['items' => $comments])
+                    @include(config('settings.theme').'.comment', ['items' => $comments])
 
                 @endforeach
             </ol>
@@ -76,6 +76,9 @@
                     <p class="comment-form-author"><label for="author">Name</label> <input id="name" name="name" type="text" value="" size="30" aria-required="true" /></p>
                     <p class="comment-form-email"><label for="email">Email</label> <input id="email" name="email" type="text" value="" size="30" aria-required="true" /></p>
                     <p class="comment-form-url"><label for="url">Website</label><input id="url" name="site" type="text" value="" size="30" /></p>
+                @else
+                    <input id="name" name="name" type="hidden" value="{{ Auth::user()->name }}" size="30" aria-required="true" />
+                    <input id="email" name="email" type="hidden" value="{{ Auth::user()->email }}" size="30" aria-required="true" />
                 @endif
                 <p class="comment-form-comment"><label for="comment">Your comment</label><textarea id="comment" name="text" cols="45" rows="8"></textarea></p>
                 <div class="clear"></div>

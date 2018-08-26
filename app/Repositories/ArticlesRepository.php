@@ -62,11 +62,11 @@ class ArticlesRepository extends Repository
                 $obj->path = $str.'.jpg';
 
                 $img = Image::make($image);
-                $img->fit(Config::get('settings.image')['width'], Config::get('settings.image')['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->path);
+                $img->fit(Config::get('settings.image')['width'], Config::get('settings.image')['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->path);
 
-                $img->fit(Config::get('settings.articles_img')['max']['width'], Config::get('settings.articles_img')['max']['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->max);
+                $img->fit(Config::get('settings.articles_img')['max']['width'], Config::get('settings.articles_img')['max']['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->max);
 
-                $img->fit(Config::get('settings.articles_img')['mini']['width'], Config::get('settings.articles_img')['mini']['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->mini);
+                $img->fit(Config::get('settings.articles_img')['mini']['width'], Config::get('settings.articles_img')['mini']['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->mini);
 
                 $data['img'] = json_encode($obj);
                 $this->model->fill($data);
@@ -115,11 +115,11 @@ class ArticlesRepository extends Repository
                 $obj->path = $str.'.jpg';
 
                 $img = Image::make($image);
-                $img->fit(Config::get('settings.image')['width'], Config::get('settings.image')['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->path);
+                $img->fit(Config::get('settings.image')['width'], Config::get('settings.image')['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->path);
 
-                $img->fit(Config::get('settings.articles_img')['max']['width'], Config::get('settings.articles_img')['max']['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->max);
+                $img->fit(Config::get('settings.articles_img')['max']['width'], Config::get('settings.articles_img')['max']['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->max);
 
-                $img->fit(Config::get('settings.articles_img')['mini']['width'], Config::get('settings.articles_img')['mini']['height'])->save(public_path().'/'.env('THEME').'/images/articles/'.$obj->mini);
+                $img->fit(Config::get('settings.articles_img')['mini']['width'], Config::get('settings.articles_img')['mini']['height'])->save(public_path().'/'.config('settings.theme').'/images/articles/'.$obj->mini);
 
                 $data['img'] = json_encode($obj);
 
@@ -129,6 +129,19 @@ class ArticlesRepository extends Repository
         $article->fill($data);
         if($article->update()){
             return ['status' => 'Материал обновлён!'];
+        }
+    }
+
+    public function deleteArticle($article)
+    {
+        if(Gate::denies('destroy', $article)){
+            abort(403);
+        }
+
+        $article->comments()->delete();
+
+        if($article->delete()){
+            return ['status' => 'Материал удалён'];
         }
     }
 }

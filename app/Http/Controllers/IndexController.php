@@ -17,7 +17,7 @@ class IndexController extends SiteController
         parent::__construct(new MenusRepository(new Menu));
         $this->s_rep = $s_rep;
         $this->bar='right';
-        $this->template = env('THEME') . '.index';
+        $this->template = config('settings.theme') . '.index';
 
         $this->p_rep = $p_rep;
         $this->a_rep = $a_rep;
@@ -39,7 +39,7 @@ class IndexController extends SiteController
 
         /*7 урок*/
         $portfolios = $this->getPortfolio();
-        $content = view(env('THEME').'.content')->with('portfolios', $portfolios)->render();
+        $content = view(config('settings.theme').'.content')->with('portfolios', $portfolios)->render();
 //        dd($portfolio);
 
         $this->vars = array_add($this->vars, 'content',$content);
@@ -47,7 +47,7 @@ class IndexController extends SiteController
 
         /*9 урок*/
         $articles = $this->getArticles();
-        $this->contentRightBar = view(env('THEME').'.indexBar')->with('articles', $articles)->render();
+        $this->contentRightBar = view(config('settings.theme').'.indexBar')->with('articles', $articles)->render();
 //        dd($articles);
         /*конец 9 урок*/
         //10 урок
